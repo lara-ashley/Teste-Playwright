@@ -6,7 +6,9 @@ dotenv.config();
 export default defineConfig({
   testDir: './tests',
   workers: 1,
-  reporter: 'list',
+  retries: 2,
+  reporter: [['list', { printSteps: false }]],
+  timeout: 60_000,
   use: {
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',

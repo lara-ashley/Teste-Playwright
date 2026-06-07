@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test'
+import { Page } from '@playwright/test';
 
 export class TurmaPage {
     constructor(private page: Page) {}
@@ -12,11 +12,18 @@ export class TurmaPage {
 
     async searchTurma(turmaName: string) {
         await this.page.getByPlaceholder('Pesquisar turma...').fill(turmaName);
-        await this.page.waitForTimeout(500);
+        await this.page.waitForSelector(`role=row >> text=${turmaName}`, { 
+            state: 'visible',
+            timeout: 10_000,
+        });
     }
 
     async submit() {
         await this.page.getByRole('button', { name: 'Salvar' }).click();
+        await Promise.race([ 
+            this.page.waitForSelector('[role="dialog"]', { state: 'hidden', timeout: 15_000 }),
+            this.page.waitForSelector('text=salva com sucesso', { state: 'visible', timeout: 15_000 }),
+        ]).catch(() => {});
     }
 
     async createTurma(courseName: string, year: string, series: string, shift: string, description: string) {

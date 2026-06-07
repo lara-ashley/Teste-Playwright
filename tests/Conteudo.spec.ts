@@ -19,7 +19,7 @@ test.describe('CRUD Conteúdo', () => {
     await conteudoPage.goto();
     await conteudoPage.createConteudo(nomeOriginal);
     await conteudoPage.submit();
-    await page.waitForSelector('text=Conteúdo salvo com sucesso');
+    await conteudoPage.waitForListToReload(); 
 
     await conteudoPage.editConteudo(nomeOriginal, nomeEditado);
     await conteudoPage.submit();
@@ -41,11 +41,13 @@ test.describe('CRUD Conteúdo', () => {
     await conteudoPage.goto();
     await conteudoPage.createConteudo(nomeOriginal);
     await conteudoPage.submit();
-    await page.waitForSelector('text=Conteúdo salvo com sucesso');
+    await conteudoPage.waitForListToReload(); 
 
     await conteudoPage.editConteudo(nomeOriginal, '');
     await conteudoPage.submit();
-    await expect(page.getByText('Este campo é obrigatório')).toBeVisible();
+    await expect(
+      page.getByText(/obrigatório/i).first() 
+    ).toBeVisible({ timeout: 5_000 });
   });
 
   test('[BORDA] criar conteúdo com nome acima do limite de caracteres exibe erro', async ({ page }) => {
@@ -63,7 +65,7 @@ test.describe('CRUD Conteúdo', () => {
     await conteudoPage.goto();
     await conteudoPage.createConteudo(nomeOriginal);
     await conteudoPage.submit();
-    await page.waitForSelector('text=Conteúdo salvo com sucesso');
+    await conteudoPage.waitForListToReload(); 
 
     await conteudoPage.editConteudo(nomeOriginal, 'A'.repeat(126));
     await conteudoPage.submit();

@@ -28,11 +28,13 @@ test.describe('CRUD Avaliação', () => {
     await avaliacaoPage.openCreateForm();
     await avaliacaoPage.submit();
     await expect(
-      page.getByText(/obrigatório|campo obrigatório|preencha/i).first()
+      page.getByRole('alert').filter({ hasText: /obrigatória/i }) 
     ).toBeVisible({ timeout: 5_000 });
   });
 
   test('[SAD] editar avaliação para descrição vazia exibe erro', async ({ page }) => {
+    test.setTimeout(60_000);
+
     const avaliacaoPage = new AvaliacaoPage(page);
     const descricaoOriginal = 'Avaliação Edit Sad ' + Date.now();
 
@@ -42,7 +44,7 @@ test.describe('CRUD Avaliação', () => {
     await avaliacaoPage.editAvaliacaoById(id, '');
     await avaliacaoPage.submitEdit();
     await expect(
-      page.getByText(/obrigatório|obrigatória|campo obrigatório|preencha/i).first()
+      page.getByRole('alert').filter({ hasText: /obrigatória/i })
     ).toBeVisible({ timeout: 5_000 });
   });
 
@@ -53,7 +55,7 @@ test.describe('CRUD Avaliação', () => {
     await avaliacaoPage.submit();
     await expect(
       page.locator('[role="alert"], [class*="error"], [class*="invalid"]')
-        .or(page.getByText(/superior a 125|máximo|limite|não pode|caracteres/i))
+        .or(page.getByText(/superior a 125/i))
         .first()
     ).toBeVisible({ timeout: 8_000 });
   });
@@ -69,7 +71,7 @@ test.describe('CRUD Avaliação', () => {
     await avaliacaoPage.submitEdit();
     await expect(
       page.locator('[role="alert"], [class*="error"], [class*="invalid"]')
-        .or(page.getByText(/superior a 125|máximo|limite|não pode|caracteres/i))
+        .or(page.getByText(/superior a 125/i))
         .first()
     ).toBeVisible({ timeout: 8_000 });
   });

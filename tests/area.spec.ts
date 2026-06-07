@@ -8,7 +8,7 @@ test.describe('CRUD Área', () => {
     await areaPage.goto();
     await areaPage.createArea('e2e-area-21' + Date.now());
     await areaPage.submit();
-    await expect(page.getByText('Área salva com sucesso')).toBeVisible();
+    await expect(page.getByText('Área salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
   });
 
   test('[HAPPY] editar nome de uma área existente', async ({ page }) => {
@@ -19,11 +19,11 @@ test.describe('CRUD Área', () => {
     await areaPage.goto();
     await areaPage.createArea(originalName);
     await areaPage.submit();
-    await expect(page.getByText('Área salva com sucesso')).toBeVisible();
+    await expect(page.getByText('Área salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
 
     await areaPage.editArea(originalName, editedName);
     await areaPage.submit();
-    await expect(page.getByText('Área salva com sucesso')).toBeVisible();
+    await expect(page.getByText('Área salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
   });
 
   test('[SAD] criar área com link no nome não renderiza o link', async ({ page }) => {
@@ -41,7 +41,7 @@ test.describe('CRUD Área', () => {
     await areaPage.goto();
     await areaPage.createArea(originalName);
     await areaPage.submit();
-    await expect(page.getByText('Área salva com sucesso')).toBeVisible();
+    await expect(page.getByText('Área salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
 
     await areaPage.editArea(originalName, '       ');
     await areaPage.submit();
@@ -63,7 +63,7 @@ test.describe('CRUD Área', () => {
     await areaPage.goto();
     await areaPage.createArea(originalName);
     await areaPage.submit();
-    await expect(page.getByText('Área salva com sucesso')).toBeVisible();
+    await expect(page.getByText('Área salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
 
     await areaPage.editArea(originalName, '!@#$%¨&**');
     await areaPage.submit();

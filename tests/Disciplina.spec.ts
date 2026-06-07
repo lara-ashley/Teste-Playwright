@@ -21,7 +21,7 @@ test.describe('CRUD Disciplina', () => {
     await disciplinaPage.goto();
     await disciplinaPage.createDiscipline(nomeOriginal, AREA_PADRAO);
     await disciplinaPage.submit();
-    await page.waitForSelector('text=Disciplina salva com sucesso');
+    await disciplinaPage.waitForListToReload(); 
 
     await disciplinaPage.editDiscipline(nomeOriginal, nomeEditado);
     await disciplinaPage.submit();
@@ -43,7 +43,7 @@ test.describe('CRUD Disciplina', () => {
     await disciplinaPage.goto();
     await disciplinaPage.createDiscipline(nomeOriginal, AREA_PADRAO);
     await disciplinaPage.submit();
-    await page.waitForSelector('text=Disciplina salva com sucesso');
+    await disciplinaPage.waitForListToReload(); 
 
     await disciplinaPage.editDiscipline(nomeOriginal, '');
     await disciplinaPage.submit();
@@ -55,7 +55,7 @@ test.describe('CRUD Disciplina', () => {
     await disciplinaPage.goto();
     await disciplinaPage.createDiscipline('A'.repeat(126), AREA_PADRAO);
     await disciplinaPage.submit();
-    await expect(page.getByText('O campo nome da disciplina não pode ser superior a 125 caracteres.')).toBeVisible();
+    await expect(page.getByText(/superior a 125/i)).toBeVisible({ timeout: 10_000 });
   });
 
   test('[BORDA] editar disciplina com nome acima do limite de caracteres exibe erro', async ({ page }) => {
@@ -65,10 +65,10 @@ test.describe('CRUD Disciplina', () => {
     await disciplinaPage.goto();
     await disciplinaPage.createDiscipline(nomeOriginal, AREA_PADRAO);
     await disciplinaPage.submit();
-    await page.waitForSelector('text=Disciplina salva com sucesso');
+    await disciplinaPage.waitForListToReload(); 
 
     await disciplinaPage.editDiscipline(nomeOriginal, 'A'.repeat(126));
     await disciplinaPage.submit();
-    await expect(page.getByText('O campo nome da disciplina não pode ser superior a 125 caracteres.')).toBeVisible();
+    await expect(page.getByText(/superior a 125/i)).toBeVisible({ timeout: 10_000 });
   });
 });

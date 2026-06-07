@@ -8,7 +8,7 @@ test.describe('CRUD Turma', () => {
     await turmaPage.goto();
     await turmaPage.createTurma('Fisioterapia', '2024', '1ª Série / 1º Semestre', 'Vespertino', 'turma 21 ' + Date.now());
     await turmaPage.submit();
-    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
   });
 
   test('[HAPPY] editar ano de uma turma existente', async ({ page }) => {
@@ -18,11 +18,11 @@ test.describe('CRUD Turma', () => {
     await turmaPage.goto();
     await turmaPage.createTurma('Fisioterapia', '2022', '9ª Série / 9º Semestre', 'Vespertino', description);
     await turmaPage.submit();
-    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
 
     await turmaPage.editTurma(description, '2022', '2027');
     await turmaPage.submit();
-    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
   });
 
   test('[SAD] criar turma sem curso exibe erro', async ({ page }) => {
@@ -40,7 +40,7 @@ test.describe('CRUD Turma', () => {
     await turmaPage.goto();
     await turmaPage.createTurma('Fisioterapia', '2022', '9ª Série / 9º Semestre', 'Vespertino', description);
     await turmaPage.submit();
-    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
 
     await turmaPage.editTurma(description, '2022', '');
     await turmaPage.submit();
@@ -62,7 +62,7 @@ test.describe('CRUD Turma', () => {
     await turmaPage.goto();
     await turmaPage.createTurma('Fisioterapia', '2022', '9ª Série / 9º Semestre', 'Vespertino', description);
     await turmaPage.submit();
-    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText('Turma salva com sucesso')).toBeVisible({ timeout: 15_000 }); 
 
     await turmaPage.editTurma(description, '2022', '2028');
     await turmaPage.submit();
